@@ -13,6 +13,7 @@ function Wall(color, x, y, width, height) {
     this.y = y;
     this.height = height;
     this.width = width;
+    this.isActive = true;
 
     /**
      * Display wall
@@ -36,8 +37,6 @@ function Door(color, x, y, width, height) {
 
     Wall.call(this, color, x, y, width, height);
 
-    this.isActive = true;
-
     /**
      * Display wall
      */
@@ -49,6 +48,7 @@ function Door(color, x, y, width, height) {
             }
         }
 
+        // only desplay if active
         if (this.isActive) {
             stroke(this.color);
             fill(this.color);
