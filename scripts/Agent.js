@@ -9,6 +9,7 @@ function Agent() {
     this.b = random(0,255);
     this.moveX = 0;
     this.moveY = 0;
+    this.movementRange = 3;
 
     this.spawn = function() {
         this.x = random(agentR,(width-agentR)/2);
@@ -42,8 +43,8 @@ function Agent() {
      */
     this.getMove = function() {
         // potential next move
-        this.moveX = random(-movementRange,movementRange);
-        this.moveY = random(-movementRange,movementRange);
+        this.moveX = random(-this.movementRange,this.movementRange);
+        this.moveY = random(-this.movementRange,this.movementRange);
 
         // make sure agent doesn't move out of bounds
         if (!this.isValidMove()) {

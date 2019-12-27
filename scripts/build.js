@@ -1,7 +1,7 @@
 let backgroundColor = 20;
-let movementRange = 3;
-let agentR = 10;
+let numAgents = 20;
 let agents = [];
+let agentR = 10;
 let world;
 
 setup = function() {
@@ -9,7 +9,7 @@ setup = function() {
     background(backgroundColor);
     world = new World();
     world.generate();
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < numAgents; i++) {
         agents.push(new Agent());
     }
 

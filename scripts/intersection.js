@@ -1,5 +1,5 @@
 /**
- * Check for intersection between an agent an a rect
+ * Agent intersects with rect
  * @param nextX
  * @param nextY
  * @param r

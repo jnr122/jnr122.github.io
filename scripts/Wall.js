@@ -76,7 +76,6 @@ function Button(color, x, y, width, height) {
     Wall.call(this, color, x, y, width, height);
 
     this.hasIntersections = false;
-
     /**
      * Display button
      */
@@ -93,7 +92,7 @@ function Button(color, x, y, width, height) {
         // show button press
         if (this.hasIntersections === true) {
             stroke(30,40,50);
-            fill(30,40,50);
+            fill(92,66,112);
         } else {
             stroke(this.color);
             fill(this.color);
