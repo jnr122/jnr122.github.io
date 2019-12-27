@@ -34,7 +34,6 @@ function World() {
             random(this.buttonWidth,width/2-(this.buttonWidth)-this.wallWidth),
             random(this.buttonWidth, height-this.buttonWidth-this.wallWidth),
             this.buttonWidth, this.buttonWidth));
-
         this.buttons.push(new Button(this.buttonColor,
             random(width/2 + this.buttonWidth,width-(this.buttonWidth)-this.wallWidth),
             random(this.buttonWidth, height-this.buttonWidth-this.wallWidth),

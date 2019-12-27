@@ -1,3 +1,10 @@
+/**
+ * Check for intersection between an agent an a rect
+ * @param nextX
+ * @param nextY
+ * @param r
+ * @returns {boolean}
+ */
 intersectingRect = function(nextX, nextY, r){
     // temporary variables to set edges for testing
     testX = nextX;

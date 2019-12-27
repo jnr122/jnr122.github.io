@@ -22,6 +22,13 @@ function Wall(color, x, y, width, height) {
         stroke(this.color);
         fill(this.color);
         rect(this.x, this.y, this.width, this.height);
+
+        // only desplay if active
+        if (this.isActive) {
+            stroke(this.color);
+            fill(this.color);
+            rect(this.x, this.y, this.width, this.height);
+        }
     };
 }
 
@@ -48,12 +55,6 @@ function Door(color, x, y, width, height) {
             }
         }
 
-        // only desplay if active
-        if (this.isActive) {
-            stroke(this.color);
-            fill(this.color);
-            rect(this.x, this.y, this.width, this.height);
-        }
     };
 }
 
