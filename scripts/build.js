@@ -1,16 +1,19 @@
 let backgroundColor = 20;
 let movementRange = 3;
 let agentR = 10;
-
 let agents = [];
-let obstacles = [];
+let world;
+
 
 setup = function() {
     createCanvas(windowWidth, windowHeight);
     background(backgroundColor);
+    world = new World();
+    world.generate();
     for (let i = 0; i < 20; i++) {
         agents.push(new Agent());
     }
+
 };
 
 /**
@@ -24,6 +27,7 @@ draw = function() {
         agents[i].display();
         agents[i].move();
     }
+    world.display();
 };
 
 

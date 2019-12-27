@@ -1,4 +1,3 @@
-
 /**
  * Parent for hider and seeker agents
  */
@@ -50,9 +49,12 @@ function Agent() {
      * @returns boolean true for valid move
      */
     this.isValidMove = function() {
+        let nextX = this.x + this.moveX;
+        let nextY = this.y + this.moveY;
+
         // make sure agent doesn't move out of bounds
-        if (!(agentR <= this.x + this.moveX && this.x + this.moveX <= width-agentR) ||
-            !(agentR <= this.y + this.moveY && this.y + this.moveY <= height-agentR)) {
+        if (!(agentR <= nextX && nextX <= width-agentR) ||
+            !(agentR <= nextY && nextY <= height-agentR)) {
             return false;
         }
 
@@ -62,13 +64,37 @@ function Agent() {
             if (this !== agents[i]) {
 
                 // get distance between the circle's centers
-                distX = this.x + this.moveX - agents[i].x;
-                distY = this.y + this.moveY - agents[i].y;
+                distX = nextX - agents[i].x;
+                distY = nextY - agents[i].y;
                 distance = sqrt((distX * distX) + (distY * distY));
 
                 if (distance <= agentR * 2) {
                     return false
                 }
+            }
+        }
+
+        // make sure agents aren't moving through walls
+        for (let i = 0; i < world.walls.length; i++) {
+            r = world.walls[i];
+            // temporar.y variables to set edges for testing
+            testX = nextX;
+            testY = nextY;
+
+            // which edge is closest?
+            if (nextX < r.x)         testX = r.x;      // test left edge
+            else if (nextX > r.x+r.width) testX = r.x+r.width;   // right edge
+            if (nextY < r.y)         testY = r.y;      // top edge
+            else if (nextY > r.y+r.height) testY = r.y+r.height;   // bottom edge
+
+            // get distance from closest edges
+            distX = nextX-testX;
+            distY = nextY-testY;
+            distance = sqrt( (distX*distX) + (distY*distY));
+
+            // if the distance is less than the radius, collision!
+            if (distance <= agentR) {
+                return false;
             }
         }
 
