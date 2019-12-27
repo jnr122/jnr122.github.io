@@ -2,13 +2,20 @@
  * Parent for hider and seeker agents
  */
 function Agent() {
-    this.x = random(agentR,width-agentR);
-    this.y = random(agentR,height-agentR);
+    this.x = 0;
+    this.y = 0;
     this.r = random(0,255);
     this.g = random(0,255);
     this.b = random(0,255);
     this.moveX = 0;
     this.moveY = 0;
+
+    this.spawn = function() {
+        this.x = random(agentR,(width-agentR)/2);
+        this.y = random(agentR,height-agentR);
+    };
+
+    this.spawn();
 
     /**
      * Get valid move
@@ -82,10 +89,10 @@ function Agent() {
             testY = nextY;
 
             // which edge is closest?
-            if (nextX < r.x)         testX = r.x;      // test left edge
-            else if (nextX > r.x+r.width) testX = r.x+r.width;   // right edge
-            if (nextY < r.y)         testY = r.y;      // top edge
-            else if (nextY > r.y+r.height) testY = r.y+r.height;   // bottom edge
+            if (nextX < r.x)               testX = r.x;          // test left edge
+            else if (nextX > r.x+r.width)  testX = r.x+r.width;  // right edge
+            if (nextY < r.y)               testY = r.y;          // top edge
+            else if (nextY > r.y+r.height) testY = r.y+r.height; // bottom edge
 
             // get distance from closest edges
             distX = nextX-testX;
@@ -103,8 +110,7 @@ function Agent() {
 
     // don't let agents generate in invalid locations
     while (!this.isValidMove()) {
-        this.x = random(agentR,width-agentR);
-        this.y = random(agentR,height-agentR);
+        this.spawn();
     }
 
 }
