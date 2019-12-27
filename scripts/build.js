@@ -1,5 +1,5 @@
 let backgroundColor = 20;
-let numAgents = 20;
+let numAgents = 2;
 let agents = [];
 let agentR = 10;
 let world;

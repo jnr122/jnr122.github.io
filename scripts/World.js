@@ -7,10 +7,10 @@ function World() {
 
     this.walls = [];
     this.buttons = [];
-    this.doors = [];
-
+    this.finishes = []
     this.wallColor = 140;
     this.buttonColor = 200;
+    this.finishColor = (201,80,19);
 
     this.wallWidth = 15;
     this.buttonWidth = this.wallWidth*4;
@@ -38,6 +38,12 @@ function World() {
             random(width/2 + this.buttonWidth,width-(this.buttonWidth)-this.wallWidth),
             random(this.buttonWidth, height-this.buttonWidth-this.wallWidth),
             this.buttonWidth, this.buttonWidth));
+
+        // finish
+        this.finishes.push(new Finish(this.buttonColor,
+            random(width/2 + this.buttonWidth,width-(this.buttonWidth)-this.wallWidth),
+            random(this.buttonWidth, height-this.buttonWidth-this.wallWidth),
+            this.buttonWidth, this.buttonWidth));
     };
 
     /**
@@ -49,6 +55,9 @@ function World() {
         }
         for (let i = 0; i < this.buttons.length; i++) {
             this.buttons[i].display();
+        }
+        for (let i = 0; i < this.finishes.length; i++) {
+            this.finishes[i].display();
         }
     };
 }
