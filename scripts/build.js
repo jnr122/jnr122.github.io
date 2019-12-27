@@ -4,13 +4,12 @@ let agentR = 10;
 let agents = [];
 let world;
 
-
 setup = function() {
     createCanvas(windowWidth, windowHeight);
     background(backgroundColor);
     world = new World();
     world.generate();
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < 20; i++) {
         agents.push(new Agent());
     }
 
@@ -22,12 +21,12 @@ setup = function() {
 draw = function() {
     // reset the screen every draw loop
     background(backgroundColor);
+    world.display();
 
     for (let i = 0; i < agents.length; i++) {
         agents[i].display();
         agents[i].move();
     }
-    world.display();
 };
 
 
