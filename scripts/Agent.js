@@ -88,7 +88,7 @@ function Agent() {
         for (let i = 0; i < world.walls.length; i++) {
             r = world.walls[i];
             if (r.isActive) {
-                if (intersectingRect(nextX, nextY, r)) {
+                if (circleIntersectingRect(nextX, nextY, r)) {
                     return false;
                 }
             }

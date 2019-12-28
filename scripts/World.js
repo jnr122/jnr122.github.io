@@ -7,10 +7,9 @@ function World() {
 
     this.walls = [];
     this.buttons = [];
-    this.finishes = []
+    this.finishes = [];
     this.wallColor = 140;
     this.buttonColor = 200;
-    this.finishColor = (201,80,19);
 
     this.wallWidth = 15;
     this.buttonWidth = this.wallWidth*4;
@@ -39,11 +38,41 @@ function World() {
             random(this.buttonWidth, height-this.buttonWidth-this.wallWidth),
             this.buttonWidth, this.buttonWidth));
 
+
+        this.spawnFinish();
+
+
+    };
+
+    /**
+     * Make the finish button
+     */
+    this.spawnFinish = function() {
+        let finishX = random(width/2 + this.buttonWidth,width-(this.buttonWidth)-this.wallWidth);
+        let finishY = random(this.buttonWidth, height-this.buttonWidth-this.wallWidth);
+
+        let finish = new Finish(this.buttonColor, finishX, finishY, this.buttonWidth, this.buttonWidth);
+
+
+        // don't let finish overlap with buttons
+        for (let i = 0; i < this.buttons.length; i++) {
+            while (rectIntersectingRect(finish, this.buttons[i])) {
+                finishX = random(width/2 + this.buttonWidth,width-(this.buttonWidth)-this.wallWidth);
+                finishY = random(this.buttonWidth, height-this.buttonWidth-this.wallWidth);
+
+                finish = new Finish(this.buttonColor, finishX, finishY, this.buttonWidth, this.buttonWidth);
+
+            }
+
+        }
+
         // finish
         this.finishes.push(new Finish(this.buttonColor,
-            random(width/2 + this.buttonWidth,width-(this.buttonWidth)-this.wallWidth),
-            random(this.buttonWidth, height-this.buttonWidth-this.wallWidth),
+            finishX,
+            finishY,
             this.buttonWidth, this.buttonWidth));
+
+
     };
 
     /**

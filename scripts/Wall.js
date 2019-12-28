@@ -86,7 +86,7 @@ function Button(color, x, y, width, height) {
         // check for button intersection
         this.hasIntersections = false;
         for (let i = 0; i < agents.length; i++) {
-            if (intersectingRect(agents[i].x, agents[i].y, this)) {
+            if (circleIntersectingRect(agents[i].x, agents[i].y, this)) {
                 this.hasIntersections = true;
             }
         }
@@ -125,7 +125,7 @@ function Finish(color, x, y, width, height) {
         // check for button intersection
         this.hasIntersections = false;
         for (let i = 0; i < agents.length; i++) {
-            if (intersectingRect(agents[i].x, agents[i].y, this)) {
+            if (circleIntersectingRect(agents[i].x, agents[i].y, this)) {
                 this.hasIntersections = true;
             }
         }
