@@ -1,22 +1,47 @@
 /**
  * Parent for hider and seeker agents
  */
-function Agent() {
+function Agent(species, reproductionRate, deathRate, starveTime) {
+    this.species = species;
+    this.reproductionRate = reproductionRate;
+    this.deathRate = deathRate;
+    this.starveTime = starveTime;
+
+    this.timeSinceFeed = 0;
     this.x = 0;
     this.y = 0;
-    this.r = random(0,255);
-    this.g = random(0,255);
-    this.b = random(0,255);
     this.moveX = 0;
     this.moveY = 0;
     this.movementRange = 3;
 
+    if (species === 0) {
+        this.r = 100;
+        this.g = 255;
+        this.b = 255;
+    } else if (species === 1)  {
+        this.r = 255;
+        this.g = 255;
+        this.b = 100;
+    }
+
+    // this.getBtnDistance = function(btn) {
+    //     return (coordDistance(this.moveX + this.x, this.moveY + this.y, (btn.x+btn.height/2), (btn.y+btn.width/2)));
+    // };
+
+    // this.buttonDist = this.getBtnDistance(world.buttons[0]);
+
     this.spawn = function() {
-        this.x = random(agentR,(width-agentR)/2);
+        this.x = random(agentR,width-agentR);
         this.y = random(agentR,height-agentR);
     };
 
     this.spawn();
+
+    this.step = function() {
+        this.move();
+    };
+
+
 
     /**
      * Get valid move
@@ -45,6 +70,10 @@ function Agent() {
         // potential next move
         this.moveX = random(-this.movementRange,this.movementRange);
         this.moveY = random(-this.movementRange,this.movementRange);
+
+        // newDist = this.getBtnDistance(world.buttons[0]);
+        // displacement = this.buttonDist-newDist;
+        // this.buttonDist = newDist;
 
         // make sure agent doesn't move out of bounds
         if (!this.isValidMove()) {
@@ -79,6 +108,11 @@ function Agent() {
                 distance = sqrt((distX * distX) + (distY * distY));
 
                 if (distance <= agentR * 2) {
+                    if (this.species === 0 && agents[i].species === 1 && Math.random() < this.reproductionRate) {
+                        agents[i] = newSpec0();
+                        this.timeSinceFeed = 0;
+                        console.log("Species 0 feeds and reproduces")
+                    }
                     return false
                 }
             }

@@ -25,21 +25,21 @@ function World() {
         this.walls.push(new Wall(this.wallColor, 0, 0, width, this.wallWidth));
         this.walls.push(new Wall(this.wallColor, 0, height - this.wallWidth, width, this.wallWidth));
 
-        // additional obstacle
-        this.walls.push(new Door(this.wallColor, width/2, 0, this.wallWidth, height));
+        // // additional obstacle
+        // this.walls.push(new Door(this.wallColor, width/2, 0, this.wallWidth, height));
 
-        // buttons
-        this.buttons.push(new Button(this.buttonColor,
-            random(this.buttonWidth,width/2-(this.buttonWidth)-this.wallWidth),
-            random(this.buttonWidth, height-this.buttonWidth-this.wallWidth),
-            this.buttonWidth, this.buttonWidth));
-        this.buttons.push(new Button(this.buttonColor,
-            random(width/2 + this.buttonWidth,width-(this.buttonWidth)-this.wallWidth),
-            random(this.buttonWidth, height-this.buttonWidth-this.wallWidth),
-            this.buttonWidth, this.buttonWidth));
-
-
-        this.spawnFinish();
+        // // buttons
+        // this.buttons.push(new Button(this.buttonColor,
+        //     random(this.buttonWidth,width/2-(this.buttonWidth)-this.wallWidth),
+        //     random(this.buttonWidth, height-this.buttonWidth-this.wallWidth),
+        //     this.buttonWidth, this.buttonWidth));
+        // this.buttons.push(new Button(this.buttonColor,
+        //     random(width/2 + this.buttonWidth,width-(this.buttonWidth)-this.wallWidth),
+        //     random(this.buttonWidth, height-this.buttonWidth-this.wallWidth),
+        //     this.buttonWidth, this.buttonWidth));
+        //
+        //
+        // this.spawnFinish();
 
 
     };
@@ -76,7 +76,7 @@ function World() {
     };
 
     /**
-     * Display agent
+     * Display world
      */
     this.display = function() {
         for (let i = 0; i < this.walls.length; i++) {

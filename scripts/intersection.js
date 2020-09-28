@@ -42,3 +42,15 @@ rectIntersectingRect = function(r1, r2) {
     }
     return false;
 };
+
+/**
+ * Get the distance between two coordinate pairs
+ * @param x1
+ * @param y1
+ * @param x2
+ * @param y2
+ */
+coordDistance = function(x1,y1,x2,y2) {
+    return Math.sqrt((x1-x2)**2+(y1-y2)**2);
+
+};
