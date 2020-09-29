@@ -91,15 +91,24 @@ function Agent(species, reproductionRate, deathRate, starveTime) {
         let nextX = this.x + this.moveX;
         let nextY = this.y + this.moveY;
 
-        // make sure agent doesn't move out of bounds
-        if (!(agentR <= nextX && nextX <= width-agentR) ||
-            !(agentR <= nextY && nextY <= height-agentR)) {
-            return false;
+        // make sure agents agents aren't overlapping
+        let distY, distX, distance, oldDistY,
+            oldDistX, oldDistance, closestRival = [-1, width];
+
+        if (this.species === 1) {
+            for (let j = 0; j < world.food.length; j++) {
+                if (circleIntersectingRect(nextX, nextY, world.food[j])) {
+                    if (Math.random() < this.reproductionRate) {
+                        agents.push(newSpec1());
+                        world.food.splice(j, 1);
+                        console.log("Species 1 feeds and reproduces");
+                    }
+                }
+            }
         }
 
-        // make sure agents agents aren't overlapping
-        let distY, distX, distance;
         for (let i = 0; i < agents.length; i++) {
+
             if (this !== agents[i]) {
 
                 // get distance between the circle's centers
@@ -107,15 +116,57 @@ function Agent(species, reproductionRate, deathRate, starveTime) {
                 distY = nextY - agents[i].y;
                 distance = sqrt((distX * distX) + (distY * distY));
 
+                if (this.species !== agents[i].species) {
+
+                    if (closestRival[1] > distance) {
+                        closestRival[0] = i;
+                        closestRival[1] = distance;
+                    }
+                }
+
                 if (distance <= agentR * 2) {
                     if (this.species === 0 && agents[i].species === 1 && Math.random() < this.reproductionRate) {
                         agents[i] = newSpec0();
                         this.timeSinceFeed = 0;
-                        console.log("Species 0 feeds and reproduces")
+                        console.log("Species 0 feeds and reproduces");
+                        if (Math.random() < foodProductionRate)
+                            world.addFood();
                     }
                     return false
                 }
+
             }
+        }
+
+
+        if (closestRival[0] > 0) {
+
+            oldDistX = this.x - agents[closestRival[0]].x;
+            oldDistY = this.y - agents[closestRival[0]].y;
+            oldDistance = sqrt((oldDistX * oldDistX) + (oldDistY * oldDistY));
+
+            distX = nextX - agents[closestRival[0]].x;
+            distY = nextY - agents[closestRival[0]].y;
+            distance = sqrt((distX * distX) + (distY * distY));
+
+            // you are a predator near prey
+            if (this.species === 0 && agents[closestRival[0]].species === 1) {
+                if (oldDistance < distance) {
+                    return false;
+                }
+
+                // you are a prey near a predator
+            } else if (this.species === 1 && agents[closestRival[0]].species === 0) {
+                if (oldDistance > distance) {
+                    return false;
+                }
+            }
+        }
+
+        // make sure agent doesn't move out of bounds
+        if (!(agentR <= nextX && nextX <= width-agentR) ||
+            !(agentR <= nextY && nextY <= height-agentR)) {
+            return false;
         }
 
         // make sure agents aren't moving through walls
@@ -127,6 +178,7 @@ function Agent(species, reproductionRate, deathRate, starveTime) {
                 }
             }
         }
+
 
         return true;
     };
