@@ -1,18 +1,19 @@
 /**
  * Parent for hider and seeker agents
  */
-function Agent(species, reproductionRate, deathRate, starveTime) {
+function Agent(species, reproductionRate, deathRate, starveTime, FOV, speed) {
     this.species = species;
     this.reproductionRate = reproductionRate;
     this.deathRate = deathRate;
     this.starveTime = starveTime;
+    this.FOV = FOV;
 
     this.timeSinceFeed = 0;
     this.x = 0;
     this.y = 0;
     this.moveX = 0;
     this.moveY = 0;
-    this.movementRange = 3;
+    this.movementRange = speed;
 
     if (species === 0) {
         this.r = 100;
@@ -93,19 +94,9 @@ function Agent(species, reproductionRate, deathRate, starveTime) {
 
         // make sure agents agents aren't overlapping
         let distY, distX, distance, oldDistY,
-            oldDistX, oldDistance, closestRival = [-1, width];
-
-        if (this.species === 1) {
-            for (let j = 0; j < world.food.length; j++) {
-                if (circleIntersectingRect(nextX, nextY, world.food[j])) {
-                    if (Math.random() < this.reproductionRate) {
-                        agents.push(newSpec1());
-                        world.food.splice(j, 1);
-                        console.log("Species 1 feeds and reproduces");
-                    }
-                }
-            }
-        }
+            oldDistX, oldDistance, closestRival = [-1, width],
+            closestFood = [-1, width], foodDistY, foodDistX, foodDistance, oldFoodDistY,
+            oldFoodDistX, oldFoodDistance;
 
         for (let i = 0; i < agents.length; i++) {
 
@@ -138,6 +129,30 @@ function Agent(species, reproductionRate, deathRate, starveTime) {
             }
         }
 
+        if (this.species === 1) {
+            // prey feeds on grass
+            for (let j = 0; j < world.food.length; j++) {
+
+                foodDistX = nextX - world.food[j].x;
+                foodDistY = nextY - world.food[j].y;
+                foodDistance = sqrt((foodDistX * foodDistX) + (foodDistY * foodDistY));
+
+                if (closestFood[1] > foodDistance) {
+                    closestFood[0] = j;
+                    closestFood[1] = foodDistance;
+                }
+
+                // species 1 feeds and reproduces
+                if (circleIntersectingRect(nextX, nextY, world.food[j])) {
+                    if (Math.random() < this.reproductionRate) {
+                        agents.push(newSpec1());
+                        this.timeSinceFeed = 0;
+                        world.food.splice(j, 1);
+                        console.log("Species 1 feeds and reproduces");
+                    }
+                }
+            }
+        }
 
         if (closestRival[0] > 0) {
 
@@ -149,17 +164,46 @@ function Agent(species, reproductionRate, deathRate, starveTime) {
             distY = nextY - agents[closestRival[0]].y;
             distance = sqrt((distX * distX) + (distY * distY));
 
-            // you are a predator near prey
-            if (this.species === 0 && agents[closestRival[0]].species === 1) {
-                if (oldDistance < distance) {
+            if (distance < this.FOV) {
+
+                // you are a predator near prey
+                if (this.species === 0 && agents[closestRival[0]].species === 1) {
+                    if (oldDistance < distance) {
+                        return false;
+                    }
+
+                    // you are prey near a predator
+                } else if (this.species === 1 && agents[closestRival[0]].species === 0) {
+                    if (oldDistance > distance) {
+                        return false;
+                    }
+                }
+            } else if (this.species === 1 && closestFood[0] < world.food.length && closestFood[0] > 0) {
+                oldFoodDistX = this.x - world.food[closestFood[0]].x;
+                oldFoodDistY = this.y - world.food[closestFood[0]].y;
+                oldFoodDistance = sqrt((oldFoodDistX * oldFoodDistX) + (oldFoodDistY * oldFoodDistY));
+
+                foodDistX = nextX - world.food[closestFood[0]].x;
+                foodDistY = nextY - world.food[closestFood[0]].y;
+                foodDistance = sqrt((foodDistX * foodDistX) + (foodDistY * foodDistY));
+
+                if (oldFoodDistance < foodDistance) {
                     return false;
                 }
 
-                // you are a prey near a predator
-            } else if (this.species === 1 && agents[closestRival[0]].species === 0) {
-                if (oldDistance > distance) {
-                    return false;
-                }
+            }
+
+        } else if (this.species === 1 && closestFood[0] < world.food.length && closestFood[0] > 0) {
+            oldFoodDistX = this.x - world.food[closestFood[0]].x;
+            oldFoodDistY = this.y - world.food[closestFood[0]].y;
+            oldFoodDistance = sqrt((oldFoodDistX * oldFoodDistX) + (oldFoodDistY * oldFoodDistY));
+
+            foodDistX = nextX - world.food[closestFood[0]].x;
+            foodDistY = nextY - world.food[closestFood[0]].y;
+            foodDistance = sqrt((foodDistX * foodDistX) + (foodDistY * foodDistY));
+
+            if (oldFoodDistance < foodDistance) {
+                return false;
             }
         }
 
@@ -178,7 +222,6 @@ function Agent(species, reproductionRate, deathRate, starveTime) {
                 }
             }
         }
-
 
         return true;
     };

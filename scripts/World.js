@@ -61,8 +61,8 @@ function World() {
 
     this.addFood = function() {
         this.food.push(new Button(this.foodColor,
-            random(this.foodWidth,width-this.foodWidth-this.wallWidth),
-            random(this.buttonWidth, height-this.foodWidth-this.wallWidth),
+            random(this.foodWidth, width-this.foodWidth-this.wallWidth),
+            random(this.foodWidth, height-this.foodWidth-this.wallWidth),
             this.foodWidth, this.foodWidth));
     };
 
