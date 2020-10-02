@@ -54,6 +54,7 @@ function World() {
     };
 
     this.startFood = function() {
+        this.food = [];
         for (let i = 0; i < this.startFoodNum; i++) {
             this.addFood();
         }

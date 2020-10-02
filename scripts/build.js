@@ -1,10 +1,11 @@
 let backgroundColor = 20;
-let numAgents = 75;
+let numAgents = 125;
 let agents = [];
 let predatorList = [];
 let preyList = [];
-let agentR = 10;
+let agentR = 4;
 let world, menu;
+let iters = 0;
 
 let chancePredator = 0.35;
 
@@ -33,7 +34,6 @@ setup = function() {
     background(backgroundColor);
     world = new World();
     menu = new Menu();
-    world.generate();
     start();
 
 };
@@ -41,7 +41,7 @@ setup = function() {
 function start() {
     agents = [];
 
-    // spec1reproductionRate = menu
+    world.generate()
 
     for (let i = 0; i < numAgents; i++) {
         if (Math.random() < chancePredator) {
@@ -67,7 +67,8 @@ function newSpec1() {
 draw = function() {
 
     // reset the screen every draw loop
-    background(backgroundColor);
+    background((Math.cos(iters/100) + 1) * 35);
+    iters++;
     world.display();
 
     for (let i = 0; i < agents.length; i++) {
