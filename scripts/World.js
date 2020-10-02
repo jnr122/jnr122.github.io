@@ -11,6 +11,7 @@ function World() {
     this.finishes = [];
     this.wallColor = 140;
     this.buttonColor = 200;
+    this.menuBuffer = 205;
 
     this.foodColor = 200;
     this.foodWidth = 10;
@@ -26,7 +27,7 @@ function World() {
     this.generate = function() {
 
         // make enclosing rectangle
-        this.walls.push(new Wall(this.wallColor, 0, 0, this.wallWidth, height));
+        this.walls.push(new Wall(this.wallColor, 0, 0, this.wallWidth + this.menuBuffer, height));
         this.walls.push(new Wall(this.wallColor, width - this.wallWidth, 0, this.wallWidth, height));
         this.walls.push(new Wall(this.wallColor, 0, 0, width, this.wallWidth));
         this.walls.push(new Wall(this.wallColor, 0, height - this.wallWidth, width, this.wallWidth));
@@ -61,7 +62,7 @@ function World() {
 
     this.addFood = function() {
         this.food.push(new Button(this.foodColor,
-            random(this.foodWidth, width-this.foodWidth-this.wallWidth),
+            random(this.foodWidth * 2 + this.menuBuffer, width-this.foodWidth-this.wallWidth),
             random(this.foodWidth, height-this.foodWidth-this.wallWidth),
             this.foodWidth, this.foodWidth));
     };
