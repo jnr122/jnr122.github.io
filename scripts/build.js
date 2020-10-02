@@ -8,6 +8,7 @@ let world, menu;
 let iters = 0;
 
 let chancePredator = 0.35;
+let reductionRate = 1;
 
 let spec0deathRate = 0.000005;
 let spec0reproductionRate = 0.25;
@@ -50,7 +51,26 @@ function start() {
             agents.push(newSpec1());
         }
     }
+}
 
+function reduce() {
+    let numKill;
+
+    agents = shuffle(agents);
+    numKill = int(agents.length * reductionRate);
+
+    for (let i = 0; i < numKill; i++)
+        agents.pop();
+
+}
+
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+
+    return array;
 }
 
 function newSpec0() {

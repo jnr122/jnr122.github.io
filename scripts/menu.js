@@ -10,6 +10,10 @@ function Menu() {
     resetButton.mouseReleased(start);
     resetButton.position(12,15);
 
+    reduceButton = createButton("Reduce");
+    reduceButton.mouseReleased(reduce);
+    reduceButton.position(100,15);
+
     let numAgentsSlider = createSlider(0, 1000, numAgents);
     numAgentsSlider.position(10, 50);
     numAgentsSlider.style('width', '80px');
