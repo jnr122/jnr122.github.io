@@ -8,7 +8,7 @@ let world, menu;
 let iters = 0;
 
 let chancePredator = 0.35;
-let reductionRate = 1;
+let reductionRate = 0.7;
 
 let spec0deathRate = 0.000005;
 let spec0reproductionRate = 0.25;
