@@ -3,7 +3,7 @@ let numAgents = 125;
 let agents = [];
 let predatorList = [];
 let preyList = [];
-let agentR = 4;
+let agentR = 6;
 let world, menu;
 let iters = 0;
 
