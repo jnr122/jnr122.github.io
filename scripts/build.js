@@ -1,5 +1,5 @@
 let backgroundColor = 20;
-let numAgents = 125;
+let numAgents = 250;
 let agents = [];
 let predatorList = [];
 let preyList = [];
@@ -7,23 +7,23 @@ let agentR = 6;
 let world, menu;
 let iters = 0;
 
-let chancePredator = 0.35;
+let chancePredator = 0.15;
 let reductionRate = 0.7;
 
 let spec0deathRate = 0.000005;
-let spec0reproductionRate = 0.25;
+let spec0reproductionRate = 0.35;
 let spec0speed = 6;
-let spec0StarveTime = 350;
-let spec0FOV = screen.width/15;
+let spec0StarveTime = 550;
+let spec0FOV = screen.width/10;
 
-let spec1reproductionRate = 0.45;
+let spec1reproductionRate = 0.95;
 let spec1speed = 8;
 let spec1deathRate = 0.000001;
 let spec1StarveTime = 900;
 let spec1FOV = screen.width/7;
 
 
-let foodProductionRate = 0.58;
+let foodProductionRate = 0.8;
 
 
 let slider;

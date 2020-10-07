@@ -116,12 +116,17 @@ function Agent(species, reproductionRate, deathRate, starveTime, FOV, speed) {
                 }
 
                 if (distance <= agentR * 2) {
-                    if (this.species === 0 && agents[i].species === 1 && Math.random() < this.reproductionRate) {
-                        agents[i] = newSpec0();
-                        this.timeSinceFeed = 0;
-                        console.log("Species 0 feeds and reproduces");
+                    if (this.species === 0 && agents[i].species === 1) {
+                        if (Math.random() < this.reproductionRate) {
+                            agents[i] = newSpec0();
+                            this.timeSinceFeed = 0;
+                            console.log("Species 0 feeds and reproduces");
+                        } else {
+                            agents.splice(i, 1);
+                        }
                         if (Math.random() < foodProductionRate)
                             world.addFood();
+
                     }
                     return false
                 }
@@ -147,9 +152,9 @@ function Agent(species, reproductionRate, deathRate, starveTime, FOV, speed) {
                     if (Math.random() < this.reproductionRate) {
                         agents.push(newSpec1());
                         this.timeSinceFeed = 0;
-                        world.food.splice(j, 1);
                         console.log("Species 1 feeds and reproduces");
                     }
+                    world.food.splice(j, 1);
                 }
             }
         }
