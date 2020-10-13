@@ -16,13 +16,13 @@ function Agent(species, reproductionRate, deathRate, starveTime, FOV, speed) {
     this.movementRange = speed;
 
     if (species === 0) {
-        this.r = 100;
-        this.g = 255;
-        this.b = 255;
+        this.r = 154;
+        this.g = 19;
+        this.b = 19;
     } else if (species === 1)  {
-        this.r = 255;
-        this.g = 255;
-        this.b = 100;
+        this.r = 19;
+        this.g = 154;
+        this.b = 146;
     }
 
     // this.getBtnDistance = function(btn) {

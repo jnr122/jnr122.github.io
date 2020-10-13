@@ -1,9 +1,9 @@
 
 
 function Menu() {
-    let predatorColor = '#64FFFF';
-    let preyColor = '#FFFF64';
-    let genericColor = '#181818';
+    let predatorColor = '#9A1313';
+    let preyColor = '#139A92';
+    let genericColor = '#D8DDDD';
     let numGlobalSliders = 3;
 
     resetButton = createButton("Reset");

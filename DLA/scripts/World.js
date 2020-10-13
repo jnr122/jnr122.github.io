@@ -9,14 +9,14 @@ function World() {
     this.buttons = [];
     this.food = [];
     this.finishes = [];
-    this.wallColor = 140;
+    this.wallColor = 40;
     this.buttonColor = 200;
     this.menuBuffer = 205;
 
     this.foodColor = 200;
     this.foodWidth = 10;
 
-    this.startFoodNum = 80;
+    this.startFoodNum = 0;
 
     this.wallWidth = 15;
     this.buttonWidth = this.wallWidth*4;
@@ -33,23 +33,6 @@ function World() {
         this.walls.push(new Wall(this.wallColor, 0, height - this.wallWidth, width, this.wallWidth));
 
         this.startFood();
-
-        // // additional obstacle
-        // this.walls.push(new Door(this.wallColor, width/2, 0, this.wallWidth, height));
-
-        // // buttons
-        // this.buttons.push(new Button(this.buttonColor,
-        //     random(this.buttonWidth,width/2-(this.buttonWidth)-this.wallWidth),
-        //     random(this.buttonWidth, height-this.buttonWidth-this.wallWidth),
-        //     this.buttonWidth, this.buttonWidth));
-        // this.buttons.push(new Button(this.buttonColor,
-        //     random(width/2 + this.buttonWidth,width-(this.buttonWidth)-this.wallWidth),
-        //     random(this.buttonWidth, height-this.buttonWidth-this.wallWidth),
-        //     this.buttonWidth, this.buttonWidth));
-        //
-        //
-        // this.spawnFinish();
-
 
     };
 
@@ -85,7 +68,6 @@ function World() {
                 finishY = random(this.buttonWidth, height-this.buttonWidth-this.wallWidth);
 
                 finish = new Finish(this.buttonColor, finishX, finishY, this.buttonWidth, this.buttonWidth);
-
             }
 
         }
@@ -95,8 +77,6 @@ function World() {
             finishX,
             finishY,
             this.buttonWidth, this.buttonWidth));
-
-
     };
 
     /**
@@ -109,11 +89,5 @@ function World() {
         for (let i = 0; i < this.food.length; i++) {
             this.food[i].display();
         }
-        // for (let i = 0; i < this.buttons.length; i++) {
-        //     this.buttons[i].display();
-        // }
-        // for (let i = 0; i < this.finishes.length; i++) {
-        //     this.finishes[i].display();
-        // }
     };
 }
