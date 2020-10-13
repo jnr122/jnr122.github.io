@@ -36,7 +36,7 @@ function Menu() {
     myDiv = createDiv('% Predator');
     myDiv.position(100, 73);
     myDiv.style('font-size', '19px');
-    myDiv.style('color', genericColor);
+    myDiv.style('color', predatorColor);
 
     function updateChancePredator() {
         chancePredator = chancePredatorSlider.value()/100;

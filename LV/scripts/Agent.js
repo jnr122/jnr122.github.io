@@ -36,7 +36,6 @@ function Agent(species, reproductionRate, deathRate, starveTime, FOV, speed) {
         this.y = random(agentR,height-agentR);
     };
 
-    this.spawn();
 
     this.step = function() {
         this.move();
@@ -99,8 +98,7 @@ function Agent(species, reproductionRate, deathRate, starveTime, FOV, speed) {
             oldFoodDistX, oldFoodDistance;
 
         for (let i = 0; i < agents.length; i++) {
-
-            if (this !== agents[i]) {
+            if (this !== agents[i] && agents[i]) {
 
                 // get distance between the circle's centers
                 distX = nextX - agents[i].x;
@@ -231,10 +229,10 @@ function Agent(species, reproductionRate, deathRate, starveTime, FOV, speed) {
         return true;
     };
 
-
     // don't let agents generate in invalid locations
     while (!this.isValidMove()) {
         this.spawn();
     }
+
 
 }

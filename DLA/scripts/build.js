@@ -1,34 +1,12 @@
 let backgroundColor = 20;
-let numAgents = 60;
+let numAgents = 500;
 let agents = [];
-let predatorList = [];
-let preyList = [];
-let agentR = 2;
+let agentR = 5;
 let world, menu;
-let iters = 0;
-
-
-
-let chancePredator = 0.15;
-let reductionRate = 0.7;
-
-let spec0deathRate = 0.000005;
-let spec0reproductionRate = 1;
 let spec0speed = 6;
-let spec0StarveTime = 550;
-let spec0FOV = screen.width;
-
-let spec1reproductionRate = 0.95;
 let spec1speed = 0;
-let spec1deathRate = 0.000001;
-let spec1StarveTime = 900;
-let spec1FOV = screen.width/7;
-
-let foodProductionRate = 0;
-
-
 let slider;
-
+let iters = 0;
 
 setup = function() {
     createCanvas(1440, 725);
@@ -41,43 +19,25 @@ setup = function() {
 };
 
 function start() {
+
     agents = [];
 
     world.generate();
+    agents.push(newSpec1());
+
 
     for (let i = 0; i < numAgents; i++) {
         agents.push(newSpec0());
     }
 
-    agents.push(newSpec1());
-}
-
-function reduce() {
-    let numKill;
-
-    agents = shuffle(agents);
-    numKill = int(agents.length * reductionRate);
-
-    for (let i = 0; i < numKill; i++)
-        agents.pop();
-
-}
-
-function shuffle(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        let j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-
-    return array;
 }
 
 function newSpec0() {
-    return (new Agent(0, spec0reproductionRate, spec0deathRate, spec0StarveTime, spec0FOV, spec0speed));
+    return (new Agent(0, spec0speed));
 }
 
 function newSpec1() {
-    return (new Agent(1, spec1reproductionRate, spec1deathRate, spec1StarveTime, spec1FOV, spec1speed));
+    return (new Agent(1, spec1speed));
 }
 
 /**
@@ -96,9 +56,10 @@ draw = function() {
             agents[i].step();
     }
 
-    if (iters % 4 === 0) {
+    if (agents.length < 1000) {
         agents.push(newSpec0());
     }
+
 };
 
 
