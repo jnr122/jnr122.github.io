@@ -1,12 +1,14 @@
 let backgroundColor = 20;
 let numAgents = 500;
 let agents = [];
-let agentR = 5;
+let agentR = 4;
 let world, menu;
 let spec0speed = 6;
 let spec1speed = 0;
 let slider;
 let iters = 0;
+let rotationRate = 0;
+let accuracy = 0.5;
 
 setup = function() {
     createCanvas(1440, 725);
@@ -54,12 +56,15 @@ draw = function() {
         agents[i].display();
         if (agents[i].species === 0)
             agents[i].step();
+        else {
+            let rotCoords = rotateCoord(agents[i].x, agents[i].y, rotationRate);
+            agents[i].x = rotCoords[0];
+            agents[i].y = rotCoords[1];
+        }
     }
 
-    if (agents.length < 1000) {
+    if (agents.length < 2000) {
         agents.push(newSpec0());
     }
 
 };
-
-

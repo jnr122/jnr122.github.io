@@ -113,15 +113,13 @@ function Agent(species, speed) {
                         this.r = 19;
                         this.g = 154;
                         this.b = 146;
-
                     }
                 }
             }
         }
 
 
-        if (this.species === 0) {
-
+        if (this.species === 0 && Math.random() < accuracy) {
             oldDistance = coordDistance(this.x, this.y, centerX, centerY);
             distance = coordDistance(nextX, nextY, centerX, centerY);
 

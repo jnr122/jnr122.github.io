@@ -51,3 +51,13 @@ rectIntersectingRect = function(r1, r2) {
 coordDistance = function(x1,y1,x2,y2) {
     return Math.sqrt((x1-x2)**2+(y1-y2)**2);
 };
+
+rotateCoord = function(px, py, angle) {
+
+    let rotX = centerX + Math.cos(angle) * (px - centerX) - Math.sin(angle) * (py - centerY);
+    let rotY = centerY + Math.sin(angle) * (px - centerX) + Math.cos(angle) * (py - centerY);
+
+    return [rotX, rotY];
+
+
+};

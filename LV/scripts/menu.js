@@ -12,7 +12,15 @@ function Menu() {
 
     reduceButton = createButton("Reduce");
     reduceButton.mouseReleased(reduce);
-    reduceButton.position(100,15);
+    reduceButton.position(70,15);
+
+    backButton = createButton("Back");
+    backButton.mouseReleased(back);
+    backButton.position(140,15);
+
+    function back() {
+        window.location.href = "../index.html";
+    }
 
     let numAgentsSlider = createSlider(0, 1000, numAgents);
     numAgentsSlider.position(10, 50);
