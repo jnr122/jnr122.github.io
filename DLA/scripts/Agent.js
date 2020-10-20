@@ -113,6 +113,11 @@ function Agent(species, speed) {
                         this.r = 19;
                         this.g = 154;
                         this.b = 146;
+
+                        // this.r = 0;
+                        // this.g = iters % 255;
+                        // this.b = iters % 255;
+
                     }
                 }
             }

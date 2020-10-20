@@ -41,8 +41,8 @@ setup = function() {
 
 function start() {
     agents = [];
-
-    world.generate()
+    background(5);
+    world.generate();
 
     for (let i = 0; i < numAgents; i++) {
         if (Math.random() < chancePredator) {
@@ -87,7 +87,7 @@ function newSpec1() {
 draw = function() {
 
     // reset the screen every draw loop
-    background((Math.cos(iters/100) + 1) * 35);
+    // background((Math.cos(iters/100) + 1) * 35);
     iters++;
     world.display();
 

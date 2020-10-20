@@ -23,6 +23,7 @@ setup = function() {
 function start() {
 
     agents = [];
+    background(5);
 
     world.generate();
     agents.push(newSpec1());
@@ -48,7 +49,9 @@ function newSpec1() {
 draw = function() {
 
     // reset the screen every draw loop
-    background((Math.cos(iters/100) + 1) * 35);
+    // background((Math.cos(iters/100) + 1) * 35);
+    background(5);
+
     iters++;
     world.display();
 
