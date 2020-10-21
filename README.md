@@ -1,3 +1,3 @@
 # multi-agent-system
 
-Building a self organized system
+Implementations of some complex system algorithms
