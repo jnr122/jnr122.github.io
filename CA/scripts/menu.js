@@ -18,7 +18,7 @@ function Menu() {
         window.location.href = "../index.html";
     }
 
-    let numAgentsSlider = createSlider(0, 1888, numAgents);
+    let numAgentsSlider = createSlider(0, 1000, numAgents);
     numAgentsSlider.position(10, 75);
     numAgentsSlider.style('width', '80px');
     numAgentsSlider.mouseReleased(updateNumAgents);

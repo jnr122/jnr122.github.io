@@ -7,16 +7,16 @@ let agentR = 6;
 let world, menu;
 let iters = 0;
 
-let chancePredator = 0.15;
+let chancePredator = 0.45;
 let reductionRate = 0.7;
 
 let spec0deathRate = 0.000000005;
-let spec0reproductionRate = 0.35;
+let spec0reproductionRate = 0.6;
 let spec0speed = 6;
 let spec0StarveTime = 550;
 let spec0FOV = screen.width/10;
 
-let spec1reproductionRate = 0.95;
+let spec1reproductionRate = 0.65;
 let spec1speed = 8;
 let spec1deathRate = 0.000000001;
 let spec1StarveTime = 900;
@@ -30,10 +30,6 @@ let xpop = 59;
 let totalPop = ypop * xpop;
 let slider;
 let chanceAgent;
-
-const mod = (x, n) => (x % n + n) % n;
-
-
 
 setup = function() {
     createCanvas(1440, 725);
@@ -91,27 +87,22 @@ draw = function() {
 
 updateGrid = function() {
 
-    let newAgents = [];
-    let newRows = [];
     let currAgent;
     let move;
     let newX, newY;
     let ind;
 
+
     for (let r = 0; r < ypop; ++r) {
-        newRows = [];
         for (let c = 0; c < xpop; ++c) {
-            newRows.push(null);
-        }
-        newAgents.push(newRows);
-        newRows = [];
-    }
 
+            let openSpots = [];
+            let enemies = [];
+            let friends = [];
+            let checkMove;
+            let checkCoords = [];
+            let coords = [];
 
-    // for (let r = 0; r < ypop; ++r) {
-    //     for (let c = 0; c < xpop; ++c) {
-    for (let r = ypop-1; r >= 0; --r) {
-        for (let c = xpop-1; c >= 0; --c) {
             currAgent = agents[r][c];
             if (currAgent !== null) {
 
@@ -126,28 +117,67 @@ updateGrid = function() {
                 //     move = currAgent.movesLeft[ind];
                 // }
 
+                for (let i = 0; i < currAgent.validMoves.length; ++i) {
+                    checkMove = currAgent.validMoves[i];
+                    checkCoords = [mod(r + checkMove[0], ypop), mod(c + checkMove[1], xpop)];
+                    if (agents[checkCoords[0]][checkCoords[1]] == null) {
+                        openSpots.push(checkCoords);
+                    } else {
+                        if (agents[checkCoords[0]][checkCoords[1]].species === agents[r][c].species) {
+                            friends.push(checkCoords);
+                        } else {
+                            enemies.push(checkCoords);
+                        }
+                    }
+                }
+
                 // if predator
                 if (currAgent.species === 0) {
+                    if (friends.length === 8) {
+                        agents[r][c] = null;
+                    } else {
+                        if (friends.length > 0) {
+                            // friends to reproduce
+                            if (enemies.length > 0 && Math.random() < spec0reproductionRate) {
+                                // enemies to eat
+                                coords = randElement(enemies);
+                                agents[coords[0]][coords[1]] = agents[r][c];
+                            } else {
+                                // no space to reproduce
+                                agents[r][c] = null;
+                            }
+                        }
+                    }
 
-                }
-                newX = mod(r + move[0], ypop);
-                newY = mod(c + move[1], xpop);
-
-                // if (agents[newX][newY] == null && agents[newX][newY] == null) {
-                //     agents[newX][newY] = currAgent;
-                // } else {
-                //     agents[r][c] = currAgent;
-                // }
-
-                if (newAgents[newX][newY] == null && agents[newX][newY] == null) {
-                    newAgents[newX][newY] = currAgent;
                 } else {
-                    newAgents[r][c] = currAgent;
+                    // friend to reproduce with
+                    if (friends.length > 0) {
+                        // space to reproduce
+                        if (openSpots.length > 0 && Math.random() < spec1reproductionRate) {
+                            coords = randElement(openSpots);
+                            agents[coords[0]][coords[1]] = agents[r][c];
+                        } else {
+                            // no space to reproduce
+                            agents[r][c] = null;
+                        }
+
+                    }
                 }
+
+                // newX = mod(r + move[0], ypop);
+                // newY = mod(c + move[1], xpop);
+                //
+                // if (agents[newX][newY] == null) {
+                //     agents[newX][newY] = currAgent;
+                //     agents[r][c] = null;
+                // }
 
                 currAgent.movesLeft = currAgent.validMoves;
             }
         }
     }
-    agents = newAgents;
+};
+
+randElement = function(list) {
+    return list[Math.floor(Math.random() * list.length)]
 };

@@ -59,5 +59,7 @@ rotateCoord = function(px, py, angle) {
 
     return [rotX, rotY];
 
-
 };
+
+
+const mod = (x, n) => (x % n + n) % n;
