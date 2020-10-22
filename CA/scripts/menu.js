@@ -18,7 +18,7 @@ function Menu() {
         window.location.href = "../index.html";
     }
 
-    let numAgentsSlider = createSlider(0, 1000, numAgents);
+    let numAgentsSlider = createSlider(0, 1888, numAgents);
     numAgentsSlider.position(10, 75);
     numAgentsSlider.style('width', '80px');
     numAgentsSlider.mouseReleased(updateNumAgents);
@@ -30,24 +30,6 @@ function Menu() {
 
     function updateNumAgents() {
         numAgents = numAgentsSlider.value();
-    }
-
-    let predatorSpeedSlider = createSlider(0, 50, spec0speed);
-    predatorSpeedSlider.position(10, 50 + 25 * numGlobalSliders);
-    predatorSpeedSlider.style('width', '80px');
-    predatorSpeedSlider.mouseReleased(updatePredSpeed);
-
-    myDiv = createDiv('Speed');
-    myDiv.position(100, 48 + 25 * numGlobalSliders);
-    myDiv.style('font-size', '19px');
-    myDiv.style('color', predatorColor);
-
-    function updatePredSpeed() {
-        spec0speed = predatorSpeedSlider.value();
-        for (let i = 0; i < agents.length; i++) {
-            if (agents[i].species === 0)
-                agents[i].movementRange = predatorSpeedSlider.value();
-        }
     }
 
     let chancePredatorSlider = createSlider(0, 100, chancePredator * 100);
