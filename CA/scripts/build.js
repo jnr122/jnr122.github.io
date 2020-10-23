@@ -1,5 +1,5 @@
 let backgroundColor = 20;
-let numAgents = 170;
+let numAgents = 500;
 let agents = [];
 let predatorList = [];
 let preyList = [];
@@ -11,12 +11,12 @@ let chancePredator = 0.45;
 let reductionRate = 0.7;
 
 let spec0deathRate = 0.000000005;
-let spec0reproductionRate = 0.6;
+let spec0reproductionRate = 0.4;
 let spec0speed = 6;
-let spec0StarveTime = 550;
+let spec0StarveTime = 5;
 let spec0FOV = screen.width/10;
 
-let spec1reproductionRate = 0.65;
+let spec1reproductionRate = 0.7;
 let spec1speed = 8;
 let spec1deathRate = 0.000000001;
 let spec1StarveTime = 900;
@@ -24,8 +24,8 @@ let spec1FOV = screen.width/7;
 
 let foodProductionRate = 0.8;
 
-let ypop = 32;
-let xpop = 59;
+let ypop = 32 * 2;
+let xpop = 59 * 2;
 
 let totalPop = ypop * xpop;
 let slider;
@@ -109,14 +109,6 @@ updateGrid = function() {
                 ind = Math.floor(Math.random() * currAgent.movesLeft.length);
                 move = currAgent.movesLeft[ind];
 
-                // // move is on the board
-                // while (r+move[0] < 0 || r+move[0] >= ypop || c+move[1] < 0 || c+move[1] >= xpop) {
-                //     // need to make sure place is empty too, remove possible new locations until none left
-                //     currAgent.movesLeft.splice(ind, 1);
-                //     ind = Math.floor(Math.random() * currAgent.movesLeft.length);
-                //     move = currAgent.movesLeft[ind];
-                // }
-
                 for (let i = 0; i < currAgent.validMoves.length; ++i) {
                     checkMove = currAgent.validMoves[i];
                     checkCoords = [mod(r + checkMove[0], ypop), mod(c + checkMove[1], xpop)];
@@ -133,46 +125,47 @@ updateGrid = function() {
 
                 // if predator
                 if (currAgent.species === 0) {
-                    if (friends.length === 8) {
+
+                    if (friends.length === 8 || currAgent.timeSinceFeed > currAgent.starveTime) {
                         agents[r][c] = null;
                     } else {
                         if (friends.length > 0) {
                             // friends to reproduce
                             if (enemies.length > 0 && Math.random() < spec0reproductionRate) {
-                                // enemies to eat
+                                // enemies to eat, reproduce
                                 coords = randElement(enemies);
-                                agents[coords[0]][coords[1]] = agents[r][c];
-                            } else {
+                                agents[coords[0]][coords[1]] = newSpec0();
+                                currAgent.timeSinceFeed = 0;
+                            } else if (openSpots.length > 0) {
                                 // no space to reproduce
+                                coords = randElement(openSpots);
+                                agents[coords[0]][coords[1]] = agents[r][c];
                                 agents[r][c] = null;
                             }
+                        } else if (openSpots.length > 0){
+                            coords = randElement(openSpots);
+                            agents[coords[0]][coords[1]] = agents[r][c];
+                            agents[r][c] = null;
+
                         }
                     }
-
+                    // prey
                 } else {
                     // friend to reproduce with
                     if (friends.length > 0) {
                         // space to reproduce
                         if (openSpots.length > 0 && Math.random() < spec1reproductionRate) {
                             coords = randElement(openSpots);
-                            agents[coords[0]][coords[1]] = agents[r][c];
+                            agents[coords[0]][coords[1]] = newSpec1();
                         } else {
                             // no space to reproduce
                             agents[r][c] = null;
                         }
-
                     }
                 }
 
-                // newX = mod(r + move[0], ypop);
-                // newY = mod(c + move[1], xpop);
-                //
-                // if (agents[newX][newY] == null) {
-                //     agents[newX][newY] = currAgent;
-                //     agents[r][c] = null;
-                // }
-
                 currAgent.movesLeft = currAgent.validMoves;
+                currAgent.timeSinceFeed++;
             }
         }
     }

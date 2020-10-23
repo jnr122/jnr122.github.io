@@ -46,5 +46,46 @@ function Menu() {
         chancePredator = chancePredatorSlider.value()/100;
     }
 
+    let predatorReproductionSlider = createSlider(0, 100, spec0reproductionRate * 100);
+    predatorReproductionSlider.position(10, 75 + 25 * numGlobalSliders);
+    predatorReproductionSlider.style('width', '80px');
+    predatorReproductionSlider.mouseReleased(updatePredReproduction);
+
+    myDiv = createDiv('Reproduction');
+    myDiv.position(100, 73 + 25 * numGlobalSliders);
+    myDiv.style('font-size', '19px');
+    myDiv.style('color', predatorColor);
+
+    function updatePredReproduction() {
+        spec0reproductionRate = predatorReproductionSlider.value();
+
+        for (let i = 0; i < agents.length; i++) {
+            if (agents[i].species === 0) {
+
+                agents[i].reproductionRate = predatorReproductionSlider.value() / 100;
+            }
+        }
+    }
+
+    let preyReproductionSlider = createSlider(0, 100, spec1reproductionRate * 100);
+    preyReproductionSlider.position(10, 50 + 25 * numGlobalSliders);
+    preyReproductionSlider.style('width', '80px');
+    preyReproductionSlider.mouseReleased(updatePreyReproduction);
+
+    myDiv = createDiv('Reproduction');
+    myDiv.position(100, 48 + 25 * numGlobalSliders);
+    myDiv.style('font-size', '19px');
+    myDiv.style('color', preyColor);
+
+    function updatePreyReproduction() {
+        spec1reproductionRate = preyReproductionSlider.value();
+
+        for (let i = 0; i < agents.length; i++) {
+            if (agents[i].species === 1)
+                agents[i].reproductionRate = preyReproductionSlider.value()/100;
+        }
+    }
+
+
 
 }

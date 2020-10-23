@@ -83,9 +83,9 @@ function World() {
      * Display world
      */
     this.display = function() {
-
-        var stepX = 20;
-        var stepY = 20;
+        // maybre too small
+        var stepX = 10;
+        var stepY = 10;
         let row = 0;
         let col = 0;
         let currAgent;
