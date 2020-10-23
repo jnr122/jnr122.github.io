@@ -1,4 +1,4 @@
-let backgroundColor = 20;
+let backgroundColor = 30;
 let numAgents = 500;
 let agents = [];
 let predatorList = [];
@@ -78,7 +78,7 @@ function newSpec1() {
 draw = function() {
 
     // reset the screen every draw loop
-    // background(5);
+    background(backgroundColor);
     iters++;
     world.display();
     updateGrid();

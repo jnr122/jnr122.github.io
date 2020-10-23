@@ -98,22 +98,6 @@ function Agent(species, reproductionRate, deathRate, starveTime, FOV, speed) {
             closestFood = [-1, width], foodDistY, foodDistX, foodDistance, oldFoodDistY,
             oldFoodDistX, oldFoodDistance;
 
-        // make sure agent doesn't move out of bounds
-        if (!(agentR <= nextX && nextX <= width-agentR) ||
-            !(agentR <= nextY && nextY <= height-agentR)) {
-            return false;
-        }
-
-        // make sure agents aren't moving through walls
-        for (let i = 0; i < world.walls.length; i++) {
-            r = world.walls[i];
-            if (r.isActive) {
-                if (circleIntersectingRect(nextX, nextY, r)) {
-                    return false;
-                }
-            }
-        }
-
         for (let i = 0; i < agents.length; i++) {
             if (this !== agents[i] && agents[i]) {
 
@@ -226,6 +210,24 @@ function Agent(species, reproductionRate, deathRate, starveTime, FOV, speed) {
                 return false;
             }
         }
+
+
+        // make sure agent doesn't move out of bounds
+        if (!(agentR <= nextX && nextX <= width-agentR) ||
+            !(agentR <= nextY && nextY <= height-agentR)) {
+            return false;
+        }
+
+        // make sure agents aren't moving through walls
+        for (let i = 0; i < world.walls.length; i++) {
+            r = world.walls[i];
+            if (r.isActive) {
+                if (circleIntersectingRect(nextX, nextY, r)) {
+                    return false;
+                }
+            }
+        }
+
 
         return true;
     };
