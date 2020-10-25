@@ -7,7 +7,9 @@ function Agent(species, reproductionRate, deathRate, starveTime, FOV, speed) {
     this.deathRate = deathRate;
     this.starveTime = starveTime;
     this.FOV = FOV;
-    this.validMoves = [[-1,-1], [-1,0], [0, -1], [0, 0], [1, 0], [0, 1], [1, 1], [-1, 1], [1, -1]];
+    // this.validMoves = [[-1,-1], [-1,0], [0, -1], [0, 0], [1, 0], [0, 1], [1, 1], [-1, 1], [1, -1]];
+    // this.validMoves = [[-1,0], [0, -1], [0, 0], [1, 0], [0, 1]];
+    this.validMoves = [[-FOV,-FOV], [-FOV,0], [0, -FOV], [0, 0], [FOV, 0], [0, FOV], [FOV, FOV], [-FOV, FOV], [FOV, -FOV]];
     this.movesLeft = this.validMoves;
     this.timeSinceFeed = 0;
     this.x = 0;

@@ -3,7 +3,7 @@
 /**
  * Hardcoded world
  */
-function World() {
+function World(stepX, stepY) {
 
     this.walls = [];
     this.buttons = [];
@@ -20,6 +20,8 @@ function World() {
 
     this.wallWidth = 15;
     this.buttonWidth = this.wallWidth*4;
+    this.stepX = stepX;
+    this.stepY = stepY;
 
     /**
      * generate world
@@ -32,7 +34,17 @@ function World() {
         this.walls.push(new Wall(this.wallColor, 0, 0, width, this.wallWidth));
         this.walls.push(new Wall(this.wallColor, 0, height - this.wallWidth, width, this.wallWidth));
 
-        this.startFood();
+        // this.startFood();
+        let rows = [];
+        let cols = [];
+        for (let gridY = this.wallWidth + 20; gridY < height - this.wallWidth * 4; gridY += this.stepY) {
+            cols = [];
+            for (let gridX = this.menuBuffer + 10; gridX < width - this.wallWidth * 4; gridX += this.stepX) {
+                cols.push(null);
+            }
+            rows.push(cols);
+        }return [rows.length, rows[0].length];
+
 
     };
 
@@ -84,19 +96,17 @@ function World() {
      */
     this.display = function() {
         // maybre too small
-        var stepX = 10;
-        var stepY = 10;
         let row = 0;
         let col = 0;
         let currAgent;
-        for (var gridY = this.wallWidth + 20; gridY < height - this.wallWidth * 4; gridY += stepY) {
-            for (var gridX = this.menuBuffer + 10; gridX < width - this.wallWidth * 4; gridX += stepX) {
+        for (var gridY = this.wallWidth + 20; gridY < height - this.wallWidth * 4; gridY += this.stepY) {
+            for (var gridX = this.menuBuffer + 10; gridX < width - this.wallWidth * 4; gridX += this.stepX) {
                 currAgent = agents[row][col];
                 var diameter = 60;
                 if (gridX >= 240)
                     diameter = 60;
                 strokeWeight(2);
-                stroke(100, 100, 100);
+                stroke(0, 0, 0);
                 if (currAgent == null)
                     fill(0,0,0);
                 else

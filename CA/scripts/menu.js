@@ -14,6 +14,10 @@ function Menu() {
     backButton.mouseReleased(back);
     backButton.position(70,15);
 
+    reduceButton = createButton("Reduce");
+    reduceButton.mouseReleased(reduce);
+    reduceButton.position(125,15);
+
     function back() {
         window.location.href = "../index.html";
     }
@@ -58,13 +62,6 @@ function Menu() {
 
     function updatePredReproduction() {
         spec0reproductionRate = predatorReproductionSlider.value();
-
-        for (let i = 0; i < agents.length; i++) {
-            if (agents[i].species === 0) {
-
-                agents[i].reproductionRate = predatorReproductionSlider.value() / 100;
-            }
-        }
     }
 
     let preyReproductionSlider = createSlider(0, 100, spec1reproductionRate * 100);
@@ -79,13 +76,19 @@ function Menu() {
 
     function updatePreyReproduction() {
         spec1reproductionRate = preyReproductionSlider.value();
-
-        for (let i = 0; i < agents.length; i++) {
-            if (agents[i].species === 1)
-                agents[i].reproductionRate = preyReproductionSlider.value()/100;
-        }
     }
 
+    let predatorStarveTimeSlider = createSlider(0, 30, spec0StarveTime);
+    predatorStarveTimeSlider.position(10, 100 + 25 * numGlobalSliders);
+    predatorStarveTimeSlider.style('width', '80px');
+    predatorStarveTimeSlider.mouseReleased(updatePredStarveTime);
 
+    myDiv = createDiv('Time to Starve');
+    myDiv.position(100, 98 + 25 * numGlobalSliders);
+    myDiv.style('font-size', '19px');
+    myDiv.style('color', predatorColor);
 
+    function updatePredStarveTime() {
+        spec0StarveTime = predatorStarveTimeSlider.value();
+    }
 }

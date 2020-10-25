@@ -10,17 +10,17 @@ let iters = 0;
 let chancePredator = 0.45;
 let reductionRate = 0.7;
 
-let spec0deathRate = 0.000000005;
+let spec0deathRate = 0.00000000005;
 let spec0reproductionRate = 0.4;
 let spec0speed = 6;
 let spec0StarveTime = 5;
-let spec0FOV = screen.width/10;
+let spec0FOV = 1;
 
-let spec1reproductionRate = 0.7;
+let spec1reproductionRate = 0.75;
 let spec1speed = 8;
-let spec1deathRate = 0.000000001;
+let spec1deathRate = 0.00000000001;
 let spec1StarveTime = 900;
-let spec1FOV = screen.width/7;
+let spec1FOV = 1;
 
 let foodProductionRate = 0.8;
 
@@ -29,23 +29,25 @@ let xpop = 59 * 2;
 
 let totalPop = ypop * xpop;
 let slider;
-let chanceAgent;
+let stepXY = 15;
 
 setup = function() {
     createCanvas(1440, 725);
     //    createCanvas(windowWidth, windowHeight);
     background(backgroundColor);
-    world = new World();
+    world = new World(stepXY, stepXY);
     menu = new Menu();
     start();
 
 };
 
 function start() {
+    [ypop, xpop] = world.generate();
+    totalPop = xpop * ypop;
     let chanceAgent = numAgents/totalPop;
     agents = [];
     background(5);
-    world.generate();
+    // console.log(xpo, ypo);
     for (let r = 0; r < ypop; ++r) {
         let rowPop = [];
         for (let c = 0; c < xpop; ++c) {
@@ -82,16 +84,15 @@ draw = function() {
     iters++;
     world.display();
     updateGrid();
-
 };
 
 updateGrid = function() {
 
     let currAgent;
     let move;
-    let newX, newY;
     let ind;
-
+    let numPred = 0;
+    let numPrey = 0;
 
     for (let r = 0; r < ypop; ++r) {
         for (let c = 0; c < xpop; ++c) {
@@ -125,8 +126,8 @@ updateGrid = function() {
 
                 // if predator
                 if (currAgent.species === 0) {
-
-                    if (friends.length === 8 || currAgent.timeSinceFeed > currAgent.starveTime) {
+                    numPred++;
+                    if (friends.length === 8 || currAgent.timeSinceFeed > spec0StarveTime) {
                         agents[r][c] = null;
                     } else {
                         if (friends.length > 0) {
@@ -151,15 +152,20 @@ updateGrid = function() {
                     }
                     // prey
                 } else {
+                    numPrey++;
                     // friend to reproduce with
-                    if (friends.length > 0) {
-                        // space to reproduce
-                        if (openSpots.length > 0 && Math.random() < spec1reproductionRate) {
-                            coords = randElement(openSpots);
-                            agents[coords[0]][coords[1]] = newSpec1();
-                        } else {
-                            // no space to reproduce
-                            agents[r][c] = null;
+                    if (friends.length === 8) {
+                        agents[r][c] = null;
+                    } else {
+                        if (friends.length > 0) {
+                            // space to reproduce
+                            if (openSpots.length > 0 && Math.random() < spec1reproductionRate) {
+                                coords = randElement(openSpots);
+                                agents[coords[0]][coords[1]] = newSpec1();
+                            } else {
+                                // no space to reproduce
+                                agents[r][c] = null;
+                            }
                         }
                     }
                 }
@@ -169,7 +175,23 @@ updateGrid = function() {
             }
         }
     }
+    // if (iters % 20 === 0) {
+    //     predatorNumList.push(numPred);
+    //     preyNumList.push(numPrey);
+    //     iterList.push(iters);
+    //     // updateChart();
+    // }
 };
+
+function reduce() {
+    for (let r = 0; r < ypop; ++r) {
+        for (let c = 0; c < xpop; ++c) {
+            if (Math.random() < reductionRate)
+                agents[r][c] = null;
+        }
+    }
+
+}
 
 randElement = function(list) {
     return list[Math.floor(Math.random() * list.length)]
