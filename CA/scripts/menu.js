@@ -92,7 +92,7 @@ function Menu() {
         spec0StarveTime = predatorStarveTimeSlider.value();
     }
 
-    let cellSizeSlider = createSlider(5, 25, cellSize);
+    let cellSizeSlider = createSlider(5, 20, cellSize);
     cellSizeSlider.position(10, 125 + 25 * numGlobalSliders);
     cellSizeSlider.style('width', '80px');
     cellSizeSlider.mouseReleased(updatePredStarveTime);
