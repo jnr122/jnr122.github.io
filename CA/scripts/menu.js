@@ -91,4 +91,18 @@ function Menu() {
     function updatePredStarveTime() {
         spec0StarveTime = predatorStarveTimeSlider.value();
     }
+
+    let cellSizeSlider = createSlider(5, 25, cellSize);
+    cellSizeSlider.position(10, 125 + 25 * numGlobalSliders);
+    cellSizeSlider.style('width', '80px');
+    cellSizeSlider.mouseReleased(updatePredStarveTime);
+
+    myDiv = createDiv('Cell Size');
+    myDiv.position(100, 123 + 25 * numGlobalSliders);
+    myDiv.style('font-size', '19px');
+    myDiv.style('color', genericColor);
+
+    function updatePredStarveTime() {
+        cellSize = cellSizeSlider.value();
+    }
 }

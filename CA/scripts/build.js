@@ -24,24 +24,25 @@ let spec1FOV = 1;
 
 let foodProductionRate = 0.8;
 
-let ypop = 32 * 2;
-let xpop = 59 * 2;
+let ypop;
+let xpop;
 
-let totalPop = ypop * xpop;
+let totalPop;
 let slider;
-let stepXY = 15;
+let cellSize = 15;
 
 setup = function() {
     createCanvas(1440, 725);
     //    createCanvas(windowWidth, windowHeight);
     background(backgroundColor);
-    world = new World(stepXY, stepXY);
+    world = new World(cellSize, cellSize);
     menu = new Menu();
     start();
 
 };
 
 function start() {
+    world = new World(cellSize, cellSize);
     [ypop, xpop] = world.generate();
     totalPop = xpop * ypop;
     let chanceAgent = numAgents/totalPop;
@@ -175,12 +176,13 @@ updateGrid = function() {
             }
         }
     }
-    // if (iters % 20 === 0) {
-    //     predatorNumList.push(numPred);
-    //     preyNumList.push(numPrey);
-    //     iterList.push(iters);
-    //     // updateChart();
-    // }
+    if (iters % 1 === 0) {
+        // predatorNumList.push(numPred);
+        // preyNumList.push(numPrey);
+        // iterList.push(iters);
+        console.log(iters, numPred, numPrey);
+        // updateChart();
+    }
 };
 
 function reduce() {
