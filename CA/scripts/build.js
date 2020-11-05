@@ -8,10 +8,14 @@ let world, menu;
 let iters = 0;
 
 let chancePredator = 0.45;
-let reductionRate = 0.7;
 
+
+let reductionRate = .6;
+let reductionPeriod = 45;
 let spec0deathRate = 0.00000000005;
-let spec0reproductionRate = 0.4;
+// let spec0reproductionRate = 0.4;
+let spec0reproductionRate = 0.5;
+
 let spec0speed = 6;
 let spec0StarveTime = 5;
 let spec0FOV = 1;
@@ -45,6 +49,8 @@ function start() {
     world = new World(cellSize, cellSize);
     [ypop, xpop] = world.generate();
     totalPop = xpop * ypop;
+    console.log(chancePredator, spec0StarveTime, spec0reproductionRate, spec1reproductionRate, totalPop);
+
     let chanceAgent = numAgents/totalPop;
     agents = [];
     background(5);
@@ -144,7 +150,7 @@ updateGrid = function() {
                                 agents[coords[0]][coords[1]] = agents[r][c];
                                 agents[r][c] = null;
                             }
-                        } else if (openSpots.length > 0){
+                        } else if (openSpots.length > 0) {
                             coords = randElement(openSpots);
                             agents[coords[0]][coords[1]] = agents[r][c];
                             agents[r][c] = null;
@@ -183,6 +189,10 @@ updateGrid = function() {
         console.log(iters, numPred, numPrey);
         // updateChart();
     }
+
+    // if (iters % reductionPeriod === 0) {
+    //     reduce();
+    // }
 };
 
 function reduce() {
