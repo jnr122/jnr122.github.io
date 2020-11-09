@@ -92,24 +92,28 @@ draw = function() {
     world.display();
 
     for (let i = 0; i < agents.length; i++) {
-        if (Math.random() < agents[i].deathRate) {
-            console.log(agents[i].species + " death");
-            agents.splice(i, 1);
-        } else {
-            agents[i].display();
-            agents[i].step();
-            agents[i].timeSinceFeed++;
-
-            // something starves and turns into food
-            if (agents[i].timeSinceFeed > agents[i].starveTime) {
-                console.log(agents[i].species + " " + agents[i].timeSinceFeed);
-
+        try {
+            if (Math.random() < agents[i].deathRate) {
                 console.log(agents[i].species + " death");
                 agents.splice(i, 1);
-                if (Math.random() < foodProductionRate)
-                    world.addFood();
-            }
+            } else {
+                agents[i].display();
+                agents[i].step();
+                agents[i].timeSinceFeed++;
 
+                // something starves and turns into food
+                if (agents[i].timeSinceFeed > agents[i].starveTime) {
+                    console.log(agents[i].species + " " + agents[i].timeSinceFeed);
+
+                    console.log(agents[i].species + " death");
+                    agents.splice(i, 1);
+                    if (Math.random() < foodProductionRate)
+                        world.addFood();
+                }
+
+            }
+        } catch {
+            console.log("agent err");
         }
     }
 };
