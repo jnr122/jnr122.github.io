@@ -8,6 +8,8 @@ function Agent(species, reproductionRate, deathRate, starveTime, FOV, speed) {
     this.starveTime = starveTime;
     this.FOV = FOV;
 
+    this.cannibalism = false;
+
     this.timeSinceFeed = 0;
     this.x = 0;
     this.y = 0;
@@ -88,6 +90,25 @@ function Agent(species, reproductionRate, deathRate, starveTime, FOV, speed) {
      * @returns boolean true for valid move
      */
     this.isValidMove = function() {
+
+        // only predator cannibalizes
+        if (this.species === 0 && cannibalismType !== cannibalismFunc.NONE) {
+
+            if (cannibalismType === cannibalismFunc.CONST) {
+                this.cannibalism = Math.random() <= 0.0;
+
+            } else if (cannibalismType === cannibalismFunc.OMNI) {
+                let initialPrey = numAgents * (1-chancePredator);
+                this.cannibalism = Math.random() <= (initialPrey + 1) / ((initialPrey + 1) + preyCounter * preyCounter);
+
+            } else if (cannibalismType === cannibalismFunc.HGRY) {
+                let hunger = this.timeSinceFeed / this.starveTime;
+                this.cannibalism = Math.random() <= 1 / (1 + Math.pow(Math.E, -6 * hunger + 3));
+            }
+            // console.log(this.cannibalism);
+
+        }
+
         let nextX = (this.x + this.moveX);
         let nextY = (this.y + this.moveY);
         let r;
@@ -122,7 +143,10 @@ function Agent(species, reproductionRate, deathRate, starveTime, FOV, speed) {
                 distY = nextY - agents[i].y;
                 distance = sqrt((distX * distX) + (distY * distY));
 
-                if (this.species !== agents[i].species) {
+                // store closest member of opposite species
+                // TODO edit if adding cannibalism
+                if (this.species !== agents[i].species ||
+                    (this.species === 0 && this.cannibalism === true)) {
 
                     if (closestRival[1] > distance) {
                         closestRival[0] = i;
@@ -130,18 +154,30 @@ function Agent(species, reproductionRate, deathRate, starveTime, FOV, speed) {
                     }
                 }
 
+                // what happens when agents overlap
                 if (distance <= agentR * 2) {
                     if (this.species === 0 && agents[i].species === 1) {
                         if (Math.random() < this.reproductionRate) {
                             agents[i] = newSpec0();
                             this.timeSinceFeed = 0;
-                            console.log("Species 0 feeds and reproduces");
+                            // console.log("Species 0 feeds and reproduces");
                         } else {
                             agents.splice(i, 1);
                         }
                         if (Math.random() < foodProductionRate)
                             world.addFood();
 
+                        // TODO here is where cannibalism would potentially occur
+                    } else if (this.species === 0 && agents[i].species === 0 && this.cannibalism === true) {
+                        if (Math.random() < this.reproductionRate) {
+                            agents[i] = newSpec0();
+                            this.timeSinceFeed = 0;
+                            // console.log("Species 0 cannibalizes and reproduces");
+                        } else {
+                            agents.splice(i, 1);
+                        }
+                        if (Math.random() < foodProductionRate)
+                            world.addFood();
                     }
                     return false
                 }
@@ -167,7 +203,7 @@ function Agent(species, reproductionRate, deathRate, starveTime, FOV, speed) {
                     if (Math.random() < this.reproductionRate) {
                         agents.push(newSpec1());
                         this.timeSinceFeed = 0;
-                        console.log("Species 1 feeds and reproduces");
+                        // console.log("Species 1 feeds and reproduces");
                     }
                     world.food.splice(j, 1);
                 }
@@ -187,13 +223,13 @@ function Agent(species, reproductionRate, deathRate, starveTime, FOV, speed) {
             if (distance < this.FOV) {
 
                 // you are a predator near prey
-                if (this.species === 0 && agents[closestRival[0]].species === 1) {
+                if (this.species === 0) {
                     if (oldDistance < distance) {
                         return false;
                     }
 
                     // you are prey near a predator
-                } else if (this.species === 1 && agents[closestRival[0]].species === 0) {
+                } else if (this.species === 1  && agents[closestRival[0]].species === 0) {
                     if (oldDistance > distance) {
                         return false;
                     }

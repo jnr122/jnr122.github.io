@@ -86,8 +86,12 @@ function Button(color, x, y, width, height) {
         // check for button intersection
         this.hasIntersections = false;
         for (let i = 0; i < agents.length; i++) {
-            if (circleIntersectingRect(agents[i].x, agents[i].y, this)) {
-                this.hasIntersections = true;
+            try {
+                if (circleIntersectingRect(agents[i].x, agents[i].y, this)) {
+                    this.hasIntersections = true;
+                }
+            } catch {
+                console.log("button display err");
             }
         }
 

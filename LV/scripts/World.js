@@ -88,6 +88,9 @@ function World() {
         }
         for (let i = 0; i < this.food.length; i++) {
             this.food[i].display();
+            if (Math.random() <= foodDecayRate) {
+                this.food.splice(i, 1);
+            }
         }
     };
 }
