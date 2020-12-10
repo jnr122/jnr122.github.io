@@ -41,6 +41,7 @@ let cannibalismType;
 
 
 setup = function() {
+    cannibalismType = cannibalismFunc.HGRY;
     createCanvas(1440, 725);
     //    createCanvas(windowWidth, windowHeight);
     background(backgroundColor);
@@ -51,7 +52,6 @@ setup = function() {
 };
 
 function start() {
-    cannibalismType = cannibalismFunc.NONE;
     console.log(cannibalismType, chancePredator, spec0StarveTime, spec0reproductionRate, spec1reproductionRate, numAgents);
 
     agents = [];
@@ -102,7 +102,8 @@ draw = function() {
 
 
 // reset the screen every draw loop
-    background((Math.cos(iters / 100) + 1) * 35);
+//     background((Math.cos(iters / 100) + 1) * 35);
+    background(5);
     iters++;
     world.display();
 
@@ -140,7 +141,7 @@ draw = function() {
 
         }
     } catch {
-        console.log("build err");
+        // console.log("build err");
     }
 };
 

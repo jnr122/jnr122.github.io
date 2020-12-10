@@ -227,4 +227,29 @@ function Menu() {
         }
     }
 
+    myDiv = createDiv('Cannibalism');
+    myDiv.position(12, 273 + 25 * numGlobalSliders);
+    myDiv.style('font-size', '19px');
+    myDiv.style('color', genericColor);
+
+    noneButton = createButton("None");
+    noneButton.mouseReleased(function() { updateCannibalism(cannibalismFunc.NONE);});
+    noneButton.position(12, 300 + 25 * numGlobalSliders);
+
+    constButton = createButton("Const");
+    noneButton.mouseReleased(function() { updateCannibalism(cannibalismFunc.CONST);});
+    constButton.position(12, 325 + 25 * numGlobalSliders);
+
+    omniButton = createButton("Omni");
+    noneButton.mouseReleased(function() { updateCannibalism(cannibalismFunc.OMNI);});
+    omniButton.position(12, 350 + 25 * numGlobalSliders);
+
+    hgryButton = createButton("Hgry");
+    noneButton.mouseReleased(function() { updateCannibalism(cannibalismFunc.HGRY);});
+    hgryButton.position(12, 375 + 25 * numGlobalSliders);
+
+    function updateCannibalism(type) {
+        cannibalismType = type
+    }
+
 }

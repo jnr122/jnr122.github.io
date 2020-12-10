@@ -91,7 +91,7 @@ function Button(color, x, y, width, height) {
                     this.hasIntersections = true;
                 }
             } catch {
-                console.log("button display err");
+                // console.log("button display err");
             }
         }
 

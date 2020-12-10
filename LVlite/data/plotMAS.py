@@ -1,30 +1,32 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import sys
 
 try:
     hyperparams = []
-    unproc = open("dumbhgry.log")
+    #file = input("file: ")
+    file = sys.argv[1]
+    print(file)
+    unproc = open(file + ".log")
     data = []
     counter = 0
     for line in unproc:
-        if counter > 3000:
-            break
+        #if counter > 3000:
+        #    break
         spltline = line.split()
 
-        if counter < 50:
-            print(spltline)
         counter += 1
         #print(spltline)
         if len(spltline) >= 6:
-            print("here")
             try:
             
 
                 float(spltline[2])
                 hyperparams = spltline[1:]
-                print(spltline)
+                #print(spltline)
             except:
-                print("hyperparams except")
+                pass
+                #print("hyperparams except")
 
         elif (len(spltline) >= 4):
             try:
@@ -39,7 +41,7 @@ try:
                 pass
 
     data = np.array(data)
-    print(hyperparams)
+    #print(hyperparams)
     #     console.log(chancePredator, spec0StarveTime, spec0reproductionRate, spec1reproductionRate, totalPop);
 
     
