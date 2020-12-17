@@ -13,20 +13,21 @@ let spec0deathRate = 0.000005;
 let spec0reproductionRate = 0.35;
 let spec0speed = 6;
 let spec0StarveTime = 550;
-let spec0FOV = screen.width/10;
+let spec0FOV = 0;
 
-let spec1reproductionRate = 0.95;
-let spec1speed = 8;
-let spec1deathRate = 0.000001;
-let spec1StarveTime = 900;
-let spec1FOV = screen.width/7;
+let spec1reproductionRate = 0.0005;
+let spec1speed = 6;
+let spec1deathRate = 0.00000001;
+let spec1StarveTime = 90000;
+let spec1FOV = 0;
 
 
-let foodProductionRate = 0.8;
-let foodDecayRate = 0.0000001;
+let foodProductionRate = 0.0;
+let foodDecayRate = 0.1;
 
 
 let slider;
+
 let cannibalismConst = 0.3;
 
 
@@ -40,8 +41,9 @@ const cannibalismFunc = {
 let cannibalismType;
 
 
+
+
 setup = function() {
-    cannibalismType = cannibalismFunc.NONE;
     createCanvas(1440, 725);
     //    createCanvas(windowWidth, windowHeight);
     background(backgroundColor);
@@ -52,6 +54,7 @@ setup = function() {
 };
 
 function start() {
+    cannibalismType = cannibalismFunc.HGRY;
     console.log(cannibalismType, chancePredator, spec0StarveTime, spec0reproductionRate, spec1reproductionRate, numAgents);
 
     agents = [];
@@ -102,12 +105,16 @@ draw = function() {
 
 
 // reset the screen every draw loop
-//     background((Math.cos(iters / 100) + 1) * 35);
-    background(5);
+    background((Math.cos(iters / 100) + 1) * 35);
     iters++;
     world.display();
 
     console.log(iters, predCounter, preyCounter);
+    if (predCounter === 0 || preyCounter === 0) {
+        if (iters !== 1)
+            throw new Error("A species died");
+    }
+
 
     predCounter = 0;
     preyCounter = 0;
@@ -141,7 +148,7 @@ draw = function() {
 
         }
     } catch {
-        // console.log("build err");
+        console.log("build err");
     }
 };
 
