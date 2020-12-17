@@ -237,19 +237,20 @@ function Menu() {
     noneButton.position(12, 300 + 25 * numGlobalSliders);
 
     constButton = createButton("Const");
-    noneButton.mouseReleased(function() { updateCannibalism(cannibalismFunc.CONST);});
+    constButton.mouseReleased(function() { updateCannibalism(cannibalismFunc.CONST);});
     constButton.position(12, 325 + 25 * numGlobalSliders);
 
     omniButton = createButton("Omni");
-    noneButton.mouseReleased(function() { updateCannibalism(cannibalismFunc.OMNI);});
+    omniButton.mouseReleased(function() { updateCannibalism(cannibalismFunc.OMNI);});
     omniButton.position(12, 350 + 25 * numGlobalSliders);
 
     hgryButton = createButton("Hgry");
-    noneButton.mouseReleased(function() { updateCannibalism(cannibalismFunc.HGRY);});
+    hgryButton.mouseReleased(function() { updateCannibalism(cannibalismFunc.HGRY);});
     hgryButton.position(12, 375 + 25 * numGlobalSliders);
 
     function updateCannibalism(type) {
-        cannibalismType = type
+        cannibalismType = type;
+        console.log(cannibalismType);
     }
 
 }

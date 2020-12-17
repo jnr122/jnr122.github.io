@@ -52,7 +52,7 @@ setup = function() {
 };
 
 function start() {
-    console.log(cannibalismType, chancePredator, spec0StarveTime, spec0reproductionRate, spec1reproductionRate, numAgents);
+    // console.log(cannibalismType, chancePredator, spec0StarveTime, spec0reproductionRate, spec1reproductionRate, numAgents);
 
     agents = [];
     background(5);
@@ -107,7 +107,7 @@ draw = function() {
     iters++;
     world.display();
 
-    console.log(iters, predCounter, preyCounter);
+    // console.log(iters, predCounter, preyCounter);
 
     predCounter = 0;
     preyCounter = 0;
