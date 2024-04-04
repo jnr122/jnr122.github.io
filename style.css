@@ -1,0 +1,19 @@
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  width: auto; /* ie8 */
+}
+
+.input-group{
+  max-width: 250px;
+  /* width: 40%; */
+  margin: auto;
+  padding-top: 50px;
+  padding-bottom: 50px;
+
+}
