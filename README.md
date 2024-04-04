@@ -1,3 +1,1 @@
-# multi-agent-system
-
-Implementations of some complex system algorithms
+# jnr122.github.io

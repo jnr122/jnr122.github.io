@@ -1,43 +1,77 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <title>Site</title>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <style>
-        .img {
-            height: 200px;
-            background: #aaa;
-        }
-        .nav-link {
-            display: inline-block;
-        }
-    </style>
-</head>
-<body>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.5">
+    <title>Calendar</title>
 
-<div class="container" style="margin-top:30px">
-    <div class="row">
-        <div class="col-sm-4">
-            <h5>Complex Systems</h5>
-            <ul class="nav nav-pills flex-column">
-                <li class="nav-item">
-                    <a class="nav-link" href="LV/index.html">Lotka-Volterra</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="CA/index.html">Lotka-Volterra (Cellular Automata)</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="DLA/index.html">Diffusion-Limited Aggregation</a>
-                </li>
-            </ul>
-            <hr class="d-sm-none">
-        </div>
+    <link rel='shortcut icon'    href='images/logo.png' />
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+
+    <link href="/docs/4.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <!-- <div id="bckrd"  class="bg" ></div> -->
+    <img id = "bckrd" src="" />
+
+    <script src="calculator.js"></script>
+
+    <body onresize="resizeImage()">
+
+
+    <!-- Custom styles for this template -->
+    <link href="cover.css" rel="stylesheet">
+  </head>
+  <body class="text-center">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+  <header class="masthead mb-auto">
+    <div class="inner">
+      <!-- <h3 class="masthead-brand">Cover</h3> -->
+      <nav class="nav nav-masthead justify-content-center">
+        <!-- <a class="nav-link active" href="wiki.html">Wiki</a> -->
+        <!-- <a class="nav-link" href="#">Features</a>
+        <a class="nav-link" href="#">c</a> -->
+      </nav>
     </div>
+  </header>
+
+  <main role="main" class="inner cover">
+    <h1 class="cover-heading">Get the Day</h1>
+
+
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="">Date</span>
+      </div>
+      <input id="month" type="number" class="form-control" placeholder="m">
+      <input id="day" type="number" class="form-control" placeholder="d">
+      <input id="year" type="number" class="form-control" placeholder="y">
+    </div>
+
+
+
+    <p class="lead">
+      <a href="#" class="btn btn-lg btn-secondary"
+         onclick="updateDayFromForm(document.getElementById('month').value,
+                                    document.getElementById('day').value,
+                                    document.getElementById('year').value)">Submit</a>
+    </p>
+  </main>
+
+  <footer class="mastfoot mt-auto">
+    <div class="inner">
+      <!-- <p>Cover template for <a href="https://getbootstrap.com/">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p> -->
+    </div>
+  </footer>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 </body>
 </html>
